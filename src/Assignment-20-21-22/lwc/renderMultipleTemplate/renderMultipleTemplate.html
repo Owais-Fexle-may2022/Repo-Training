@@ -1,0 +1,20 @@
+<template>
+    <lightning-card title="RenderMultipleTemplate" icon-name="standard:formula">
+        <div class="slds-var-m-around_medium">
+            <p class="slds-var-m-button_small">
+            <lightning-button variant="brand" label="Click Me 1" title="clickMeForOne" onclick={handleClickMe1} class="slds-m-left_x-small"></lightning-button>
+            <lightning-button variant="brand" label="Click Me 2" title="clickMeForTwo" onclick={handleClickMe2} class="slds-m-left_x-small"></lightning-button>
+            <lightning-button variant="brand" label="Click Me 3" title="clickmeForThree" onclick={handleClickMe3} class="slds-m-left_x-small"></lightning-button>
+            </p>
+            <template if:true={message1}>
+                <p>{message1}</p>
+            </template>
+            <template if:true={message2}>
+                <p>{message1} {message2}</p>
+            </template>
+            <template if:true={message3}>
+                <p>{message1} {message2} {message3}</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>
