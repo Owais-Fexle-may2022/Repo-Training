@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Controller</members>
+        <members>countryTriggerHelper</members>
+        <members>districtTriggerHelper</members>
+        <members>stateTriggerHelper</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>District_Trigger</members>
+        <members>State_Trigger</members>
+        <members>countryTrigger</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>renderMultipleTemplate</members>
+        <members>updatedCalculator</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <version>55.0</version>
+</Package>

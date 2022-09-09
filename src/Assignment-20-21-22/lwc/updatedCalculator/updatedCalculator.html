@@ -1,0 +1,38 @@
+<!--
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+* @Description      This HTML file is used to create a lightning component of calculator on salesforce org.
+* @author           Mohd Owais  <mohd.owais@fexle.com>
+* @created          2022-08-31
+* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+-->
+<template>
+    
+    <lightning-card  variant="Narrow"  title="Simple Calc" icon-name="standard:account">
+        <div class="slds-p-around_small">
+            <!-- <h2>Input First Number</h2> -->
+            <lightning-input type="number" name="First Number" label="Enter First Number" onchange={FirstNumber} required></lightning-input><br>
+                <!-- <h2>Input Second Number</h2> -->
+            <lightning-input type="number" name="Second Number" label="Enter Second number" onchange={SecondNumber} required></lightning-input><br>  
+            <!-- layout for making horizontal spaces between buttons -->
+            <lightning-layout horizontal-align="space"> 
+                <!-- initilizing buttons -->
+                <lightning-layout-item padding="around-small">      
+                    <lightning-button variant="brand" label="Add" onclick={Addition}></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small">
+                    <lightning-button variant="brand" label="sub"  onclick={Subtraction}></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small">
+                    <lightning-button variant="brand" label="mul"  onclick={Multiplication}></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small">
+                    <lightning-button variant="brand" label="div"  onclick={Division}></lightning-button> 
+                </lightning-layout-item>
+            </lightning-layout>  
+            <!-- initilizing formatted text for showing output   -->
+            <div>
+                <lightning-formatted-text value={currentOutput}></lightning-formatted-text>
+            </div>             
+        </div>
+    </lightning-card>
+</template>
