@@ -1,0 +1,17 @@
+<!-- /*
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+* @Description      This template is calling its  child component and having a button in its template.
+* @author           Mohd Owais  <mohd.owais@fexle.com>
+* @created Date     10/9/2022
+* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/ -->
+<template>
+    <!-- adding lightning card  -->
+    <lightning-card title="child value fetching">
+        <!--calling child web component here-->
+        <c-child-web-component></c-child-web-component>
+        <!-- adding button -->
+        <lightning-button variant="brand" label="Submit" onclick={handleClick}>
+        </lightning-button>
+    </lightning-card>
+</template>

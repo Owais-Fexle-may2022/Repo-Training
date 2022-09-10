@@ -1,0 +1,22 @@
+<!-- /*
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+* @Description      This Template is having a tabset which is having two Tabs in it and both tab contains a child component in it.
+* @author           Mohd Owais  <mohd.owais@fexle.com>
+* @created Date     10/9/2022
+* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/ -->
+<template>
+    <!-- initilizing tabset -->
+    <lightning-tabset variant="scoped">
+        <!-- initilizing  tab -->
+        <lightning-tab label="Tab One">
+            <!-- calling parentLwc component -->
+            <c-parent-lwc></c-parent-lwc>
+        </lightning-tab>
+        <!-- initilizing tab -->
+        <lightning-tab label="Tab Two">
+            <!-- calling parentWebComponent -->
+            <c-parent-web-component></c-parent-web-component>
+        </lightning-tab>
+    </lightning-tabset>
+</template>
