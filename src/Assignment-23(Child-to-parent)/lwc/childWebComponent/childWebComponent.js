@@ -9,9 +9,9 @@ import { LightningElement,track,api } from 'lwc';
 
 export default class ChildWebComponent extends LightningElement {
   //it reflect value to template it is reactive in nature. 
-  @track value=0; 
+  @track value=''; 
   //this is a public method and its parent will call it.when it gets call it change value to 100.
   @api handleValueChange() {
-    this.value=100;
+    this.value='Magic';
   }
 }

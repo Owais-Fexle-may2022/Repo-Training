@@ -7,11 +7,13 @@
 */ -->
 <template>
     <!-- adding lightning card  -->
-    <lightning-card title="child value fetching">
+    <lightning-card title="Getting Child Data">
         <!--calling child web component here-->
         <c-child-web-component></c-child-web-component>
         <!-- adding button -->
-        <lightning-button variant="brand" label="Submit" onclick={handleClick}>
-        </lightning-button>
+		<div class="slds-clearfix">
+			<lightning-button class="slds-align_absolute-center" variant="brand" label="Click Me" onclick={handleClick}>
+			</lightning-button>
+		</div>
     </lightning-card>
 </template>

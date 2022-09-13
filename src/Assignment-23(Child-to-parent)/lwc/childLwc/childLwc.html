@@ -7,13 +7,15 @@
 -->
 <template>
     <!-- adding Lightning card  -->
-    <lightning-card title="input from child">
+    <lightning-card>
         <!-- adding input field -->
-        <lightning-input
-            label="Enter a number"
-            name="input1"
-            type="number"
-            onchange={handleChnage}
-        ></lightning-input>
-</lightning-card>
+		<div class="slds-form-element" style="width:200px; height:50px">
+			<lightning-input
+				label="Enter a number"
+				name="input1"
+				type="number"
+				onchange={handleChnage}
+			></lightning-input>
+		</div>
+	</lightning-card>
 </template>
