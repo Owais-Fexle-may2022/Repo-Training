@@ -7,18 +7,18 @@
   */ -->
 <template>
   <!-- adding lightning card -->
-    <lightning-card title="Data Getting From Child">
+    <lightning-card title="Data Getting From Child" icon-name="utility:connected_apps">
       <!-- adding paragraph with CSS class  -->
       <p class="slds-p-horizontal_small">
+		 <!-- calling child and catching child dispatch event  -->
+        <c-child-lwc
+          onchangevalueofprogress={hanldeProgressValueChange}
+        ></c-child-lwc>
         <!-- adding progress bar -->
         <lightning-progress-bar
           value={progressValue}
           size="large"
         ></lightning-progress-bar>
-        <!-- calling child and catching child dispatch event  -->
-        <c-child-lwc
-          onchangevalueofprogress={hanldeProgressValueChange}
-        ></c-child-lwc>
       </p>
     </lightning-card>
     
