@@ -1,0 +1,25 @@
+<!-- /*
+  ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+  * @Description      This Template is used to display Lighting progress bar and call child template.
+  * @author           Mohd Owais  <mohd.owais@fexle.com>
+  * @created Date     10/9/2022
+  * ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+  */ -->
+<template>
+  <!-- adding lightning card -->
+    <lightning-card title="Data Getting From Child" icon-name="utility:connected_apps">
+      <!-- adding paragraph with CSS class  -->
+      <p class="slds-p-horizontal_small">
+		 <!-- calling child and catching child dispatch event  -->
+        <c-child-lwc
+          onchangevalueofprogress={hanldeProgressValueChange}
+        ></c-child-lwc>
+        <!-- adding progress bar -->
+        <lightning-progress-bar
+          value={progressValue}
+          size="large"
+        ></lightning-progress-bar>
+      </p>
+    </lightning-card>
+    
+</template>

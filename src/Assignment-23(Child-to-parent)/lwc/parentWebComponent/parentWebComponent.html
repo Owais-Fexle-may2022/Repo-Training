@@ -1,0 +1,19 @@
+<!-- /*
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+* @Description      This template is calling its  child component and having a button in its template.
+* @author           Mohd Owais  <mohd.owais@fexle.com>
+* @created Date     10/9/2022
+* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/ -->
+<template>
+    <!-- adding lightning card  -->
+    <lightning-card title="Getting Child Data" icon-name="action:preview">
+        <!--calling child web component here-->
+        <c-child-web-component></c-child-web-component>
+        <!-- adding button -->
+		<div class="slds-clearfix">
+			<lightning-button class="slds-align_absolute-center" variant="brand" label="Click Me" onclick={handleClick}>
+			</lightning-button>
+		</div>
+    </lightning-card>
+</template>
