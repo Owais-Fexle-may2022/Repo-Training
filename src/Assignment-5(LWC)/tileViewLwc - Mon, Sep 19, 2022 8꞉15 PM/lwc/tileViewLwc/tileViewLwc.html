@@ -1,0 +1,48 @@
+<!-- /*
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+* @Description     This template is used for showing contact in tile format.
+* @author           Mohd Owais  <mohd.owais@fexle.com>
+* @created Date     18/9/2022
+* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/ -->
+<template>
+	<lightning-card title="Contact Record" icon-name='standard:contact_list'>
+		<div class="slds-card__body_inner">
+			<!-- if contacts that comes from js is not empty -->
+			<template if:true={contacts}>
+				<!-- creating multiple layout -->
+				<lightning-layout multiple-rows="true">
+					<!-- Iterating contacts -->
+					<template for:each={contacts} for:item="contacts">
+						<!-- adding key as contact id in layout item and size accordingly from js  -->
+						<lightning-layout-item key={contacts.Id} size={tileSize} class="slds-var-p-around_x-small">
+							<div class="demo-only" style="width:auto">
+								<!-- initilize unorder List -->
+								<ul class="slds-has-dividers_around-space">
+									<!-- initilizing list item and adding third party css class in it -->
+									<li class="slds-item bear-tile">
+										<!-- create article block -->
+										<article class="slds-tile slds-tile_board">
+											<!-- create tile and adding contact name in it and adding url of contact object  -->
+											<lightning-tile label={contacts.Name}
+												style="font-size: 20px; font-weight: bold;"
+												href="https://fexleservicesprivatelimi-ce-dev-ed.lightning.force.com/lightning/o/Contact/list?filterName=00B5i000005Xr4pEAC">
+											</lightning-tile>
+											<div class="slds-tile__detail">
+												<!-- adding all detail to article and add truncate class css in it -->
+												<p class="slds-truncate">Id : {contacts.Id}</p>
+												<p class="slds-truncate">Title : {contacts.Title}</p>
+												<p class="slds-truncate">Phone : {contacts.Phone}</p>
+												<p class="slds-truncate">Email : {contacts.Email}</p>
+											</div>
+										</article>
+									</li>
+								</ul>
+							</div>
+						</lightning-layout-item>
+					</template>
+				</lightning-layout>
+			</template>
+		</div>
+	</lightning-card>
+</template>
