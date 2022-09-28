@@ -1,0 +1,23 @@
+<template>
+    <!-- create lightning card -->
+    <lightning-card>
+        <!-- create lightning carousel -->
+        <lightning-carousel>
+            <!-- check if actor is not empty-->
+        <template if:true={actor}>
+            <!-- iterate actor  -->
+            <template for:each={actor} for:item="actors">
+                <!-- adding all object properties -->
+                <lightning-carousel-image 
+                    key={actors.id} 
+                    src={actors.src} 
+                    header={actors.header}
+                    description={actors.description} 
+                    alternative-text="Test" 
+                    href={actors.href}>
+                </lightning-carousel-image>
+            </template>
+        </template>
+    </lightning-carousel>
+</lightning-card>
+</template>
