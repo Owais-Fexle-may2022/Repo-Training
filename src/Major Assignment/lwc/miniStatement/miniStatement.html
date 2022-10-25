@@ -1,0 +1,33 @@
+<!-- /*
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+* @Description      This HTML is used in mini Statement Lightning web Component.
+* @author           Mohd Owais  <mohd.owais@fexle.com>           
+* @created          17/10/2022
+* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/ -->
+<template>
+    <!-- adding css -->
+     <div style="height: 300px; width:806px">
+        <lightning-card title="Mini Statement">
+            <div class="slds-p-horizontal_x-small">
+                <!-- create a combobox with on change method -->
+                <lightning-combobox label="Select Limit" 
+                                    value={value} 
+                                    placeholder="Choose Select" 
+                                    options={options} 
+                                    onchange={handleLimit}>
+                </lightning-combobox>
+            </div>
+            <!-- check for card visibility -->
+            <template if:true={cardVisible}>
+                <div style="height: auto; width: auto" class="slds-p-horizontal_x-small">
+                    <!-- create data table to show data of result if card visibilty is true -->
+                    <lightning-datatable key-field = "Id" 
+                                         data = {txns} 
+                                         columns = {txnColumns}>
+                    </lightning-datatable>
+                </div>
+            </template>
+        </lightning-card>
+    </div>
+</template>
