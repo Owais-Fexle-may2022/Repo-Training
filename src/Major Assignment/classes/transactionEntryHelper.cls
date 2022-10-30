@@ -23,7 +23,7 @@ public class transactionEntryHelper {
         // iterating new transaction list and adding parent id to set contactIds.
         for(Transactions_Entry__c txn: newTransactionList){     
             if((txn.Contact__c!=null && oldTransactionMap==null) || (oldTransactionMap!=null && 
-                oldTransactionMap.get(txn.Id).contact__c!=null &&
+               	oldTransactionMap.get(txn.Id).contact__c!=null &&
                 (txn.Type__c != oldTransactionMap.get(txn.Id).Type__c
                 ||txn.Status__c!=oldTransactionMap.get(txn.Id).Status__c
                 ||txn.Amount__c!=oldTransactionMap.get(txn.Id).Amount__c))) {
