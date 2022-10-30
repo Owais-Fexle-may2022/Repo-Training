@@ -1,0 +1,70 @@
+<!-- /*
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+* @Description      This vf File is used to make a page to search transaction based on required field.
+* @author           Mohd Owais  <mohd.owais@fexle.com>           
+* @created          19/10/2022
+* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/ -->
+<!-- adding controller -->
+<apex:page controller="searchTransactionHelper" docType="html-5.0">
+    <apex:slds />
+    <h1>Search Transactions</h1>
+    <apex:form id="form">
+        <apex:pageBlock title="Enter Values in the following field">
+            <apex:pageBlockSection >
+                <apex:outputLabel value="Amount Between"></apex:outputLabel>
+                <br/>
+                <!-- required input fields for amount-->
+                <apex:input type="number" value="{! amountFrom }" label="Amount From" required="true" />
+                <apex:input type="number" value="{! amountUpto }" label="Amount Upto" required="true" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:outputLabel value="Date Between"></apex:outputLabel>
+                <br/>
+                <!-- required input fields for date -->
+                <apex:input type="date" value="{! dateFrom }" label="Date From" required="true" />
+                <apex:input type="date" value="{! dateUpto }" label="Date Upto" required="true" />
+            </apex:pageBlockSection>
+            <br/>
+            <apex:panelGrid columns="">
+            </apex:panelGrid>
+            <apex:pageBlockSection columns="">
+                <apex:panelGrid columns="2">
+                    <!-- required input field for entry -->
+                    <apex:outputLabel value="Entry Name"></apex:outputLabel>
+                    <apex:input type="text" value="{! entryName }" required="true" />
+                </apex:panelGrid>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="">
+                <apex:panelGrid columns="2">
+                    <!-- required input field for account number -->
+                    <apex:outputLabel value="Account Number"></apex:outputLabel>
+                    <apex:input type="text" value="{! accountNumber }" required="true" />
+                </apex:panelGrid>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:panelGrid columns="1">
+                    <apex:outputLabel value="Status"></apex:outputLabel>
+                    <!-- list for selecting status -->
+                    <apex:selectList value="{!selectedStatus}" size="1">
+                        <apex:selectOption itemValue="Pending" itemLabel="Pending"/>
+                        <apex:selectOption itemValue="Completed" itemLabel="Completed"/>
+                        <apex:selectOption itemValue="Cancelled" itemLabel="Cancelled"/>
+                    </apex:selectList>
+                </apex:panelGrid>
+            </apex:pageBlockSection>  
+            <apex:commandButton action="{!searchTransaction}" value="Submit"/>
+        </apex:pageBlock>
+        <!-- to view data based on inputs -->
+        <apex:pageBlock title="Result of the Above Form">
+            <apex:pageBlockTable value="{!transactionData }" var="fetch">
+                <apex:column value="{!fetch.Name}"/>
+                <apex:column value="{!fetch.Status__c}"/>
+                <apex:column value="{!fetch.Transaction_Date__c}"/>
+                <apex:column value="{!fetch.Amount__c}"/>
+                <apex:column value="{!fetch.TX_Entry_Name__c}"/>
+                <apex:column value="{!fetch.Contact__r.Account_Number__c}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

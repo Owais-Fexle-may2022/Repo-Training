@@ -1,0 +1,55 @@
+<!-- /*
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+* @Description      This HTML is used in  Statement Lightning web Component.
+* @author           Mohd Owais  <mohd.owais@fexle.com>           
+* @created          17/10/2022
+* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/ -->
+<template>
+    <!-- adding css and lightning card -->
+    <lightning-card title="Transaction Entries Records" style="width: 1500px;">
+        <div style="width: 350px;" class="slds-var-m-around_small  slds-size_1-of-3">
+            <!-- input for start date with on change event -->
+            <lightning-input type="date" name="input5" label="Start Date" placeholder="Start Date..." required
+                value={startDate_Value} class="slds-m-horizontal_small" onchange={handle_Start_Date}></lightning-input>
+            <!-- input for start date with on change event -->
+            <lightning-input type="date" name="input5" label="End Date" required value={endDate_Value}
+                class="slds-m-horizontal_small" onchange={handle_End_Date} placeholder="Start Date...">
+            </lightning-input>
+        </div>
+
+        <div class="csv slds-var-m-left_medium slds-var-m-top_large">
+            <!-- button to show transaction with on click event -->
+            <lightning-button variant=" brand" label="Show Statement" onclick={handleClick} style='margin-right:16px'>
+            </lightning-button>
+            <!-- button to Download csv file with on click event -->
+            <lightning-button variant="brand" label="Download CSV" title="Primary action" onclick={downloadCsvFile}
+                style='margin-right:16px'></lightning-button>
+            <!-- button to Download PDF file with on click event -->
+            <lightning-button variant="brand" label="Download PDF" title="Primary action" onclick={downloadPdfFile}
+                style='margin-right:16px'></lightning-button>
+            <!-- button to Sent PDF file as email attachment with on click event -->
+            <lightning-button variant="brand" label="Email Statement (PDF)" title="Primary action" onclick={handleEmail}
+                style='margin-right:16px'></lightning-button>
+        </div>
+
+        <div>
+            <!-- datatable to show entries -->
+            <template if:true={entriesRecord}>
+                <div class="slds-m-around_medium">
+                    <lightning-datatable columns={columns} data={entriesRecord} hide-checkbox-column="true"
+                        key-field="id"></lightning-datatable>
+                </div>
+            </template>
+        </div>
+
+        <div slot="footer">
+            <lightning-button variant="brand" label="OK" onclick={handleClick} class="slds-m-right_small" type="submit">
+            </lightning-button>
+            <!-- button to close action -->
+            <lightning-button variant="neutral" label="Cancel" onclick={closeAction}></lightning-button>
+        </div>
+
+    </lightning-card>
+
+</template>
