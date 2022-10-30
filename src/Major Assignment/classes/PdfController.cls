@@ -22,8 +22,8 @@ public with sharing class PdfController {
         Id recordIdOfContact = ApexPages.currentPage().getParameters().get('id');
         //SOQL
         Transaction_Entry_List = [SELECT Id, Name, Amount__c, Transaction_Date__c,
-                                           Type__c, Status__c FROM Transactions_Entry__c WHERE 
-                                           Contact__c =: recordIdOfContact];
+                                 Type__c, Status__c FROM Transactions_Entry__c WHERE 
+                                          			Contact__c =: recordIdOfContact];
         //Contact information for pdf body
         contact_Obj = [SELECT Id, Title, Name, Account_Number__c, Email FROM Contact WHERE Id =: recordIdOfContact];
     }

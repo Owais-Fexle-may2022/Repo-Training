@@ -22,58 +22,61 @@ public class transactionEntryHelper {
         Integer minimumBalance=3000;
         // iterating new transaction list and adding parent id to set contactIds.
         for(Transactions_Entry__c txn: newTransactionList){     
-            if(oldTransactionMap==null || (oldTransactionMap!=null &&
+            if(oldTransactionMap==null || (oldTransactionMap!=null && 
+                oldTransactionMap.get(txn.Id).contact__c!=null &&
                 (txn.Type__c != oldTransactionMap.get(txn.Id).Type__c
                 ||txn.Status__c!=oldTransactionMap.get(txn.Id).Status__c
                 ||txn.Amount__c!=oldTransactionMap.get(txn.Id).Amount__c))) {
                 contactIds.add(txn.Contact__c);
             }
         }
+        if(contactIds.size()>0){
         // qurerying data of parent record of transaction entry.
-        Map<Id,Contact> mapOfContact=new  Map<Id,Contact>([SELECT Id,Available_Balance__c,Account_Number__c,Status__c,
-                                                        Transaction_Limit__r.Maximum_Debit_Allowed_per_Transaction__c
-                                                                                FROM Contact WHERE Id IN:contactIds]);
-        Map<Id,Contact> mapOfContactToBeUpdate = new Map<Id,Contact>();
-        // iterating transaction list.
-        for(Transactions_Entry__c txn:newTransactionList){
-            // check for status and minimun balance.
-            if(mapOfContact!=null && (mapOfContact.get(txn.Contact__c).Status__c == 'Active' && 
-                        mapOfContact.get(txn.Contact__c).Available_Balance__c >  minimumBalance)){
-                // create object of parent to be update.
-                Contact con = new Contact();
-                //  check for type and status of transaction.
-                if(txn.Type__c == 'Debit' && ( txn.Status__c =='Completed' || txn.Status__c=='Pending')){
-                    // adding details to parents object
-                    con.Id = txn.Contact__c;
-                    con.Available_Balance__c = mapOfContact.get(txn.Contact__c).Available_Balance__c - txn.Amount__c;
-                    mapOfContactToBeUpdate.put(con.Id,con);
-                }
-                else if(txn.Type__c == 'Credit' && (txn.Status__c =='Completed' ||txn.Status__c=='Pending')){
-                    con.Id = txn.Contact__c;
-                    con.Available_Balance__c = mapOfContact.get(txn.Contact__c).Available_Balance__c + txn.Amount__c;
-                    mapOfContactToBeUpdate.put(con.Id,con);
-                }
-                else if(oldTransactionMap!=null && oldTransactionMap.get(txn.Id).Status__c=='Pending'
-                                            && txn.Status__c=='Cancelled' && txn.Type__c=='Credit' ){
-                    con.Id=txn.Contact__c;
-                    con.Available_Balance__c = mapOfContact.get(txn.Contact__c).Available_Balance__c - txn.Amount__c;
-                    mapOfContactToBeUpdate.put(con.Id,con);
-                }else if(oldTransactionMap!=null && oldTransactionMap.get(txn.Id).Status__c=='Pending'
-                                                && txn.Status__c=='Cancelled' && txn.Type__c=='Debit'){
-                    con.Id=txn.Contact__c;
-                    con.Available_Balance__c = mapOfContact.get(txn.Contact__c).Available_Balance__c + txn.Amount__c;
-                    mapOfContactToBeUpdate.put(con.Id,con);  
-                }
-                else{
-                    // if condition not met then the show an error on status.
-                    txn.Status__c.addError('you cannot select cancelled at new entry');
+            Map<Id,Contact> mapOfContact=new  Map<Id,Contact>([SELECT Id,Available_Balance__c,Account_Number__c,Status__c,
+                                                            Transaction_Limit__r.Maximum_Debit_Allowed_per_Transaction__c
+                                                                                    FROM Contact WHERE Id IN:contactIds]);
+            Map<Id,Contact> mapOfContactToBeUpdate = new Map<Id,Contact>();
+            // iterating transaction list.
+            for(Transactions_Entry__c txn:newTransactionList){
+                // check for status and minimun balance.
+                if(mapOfContact!=null && (mapOfContact.get(txn.Contact__c).Status__c == 'Active' && 
+                   mapOfContact.get(txn.Contact__c).Available_Balance__c >  minimumBalance)){
+                    // create object of parent to be update.
+                    Contact con = new Contact();
+                    //  check for type and status of transaction.
+                    if(txn.Type__c == 'Debit' && ( txn.Status__c =='Completed' || txn.Status__c=='Pending')){
+                        // adding details to parents object
+                        con.Id = txn.Contact__c;
+                        con.Available_Balance__c = mapOfContact.get(txn.Contact__c).Available_Balance__c - txn.Amount__c;
+                        mapOfContactToBeUpdate.put(con.Id,con);
+                    }
+                    else if(txn.Type__c == 'Credit' && (txn.Status__c =='Completed' ||txn.Status__c=='Pending')){
+                        con.Id = txn.Contact__c;
+                        con.Available_Balance__c = mapOfContact.get(txn.Contact__c).Available_Balance__c + txn.Amount__c;
+                        mapOfContactToBeUpdate.put(con.Id,con);
+                    }
+                    else if(oldTransactionMap!=null && oldTransactionMap.get(txn.Id).Status__c=='Pending'
+                                                && txn.Status__c=='Cancelled' && txn.Type__c=='Credit' ){
+                        con.Id=txn.Contact__c;
+                        con.Available_Balance__c = mapOfContact.get(txn.Contact__c).Available_Balance__c - txn.Amount__c;
+                        mapOfContactToBeUpdate.put(con.Id,con);
+                    }else if(oldTransactionMap!=null && oldTransactionMap.get(txn.Id).Status__c=='Pending'
+                                                    && txn.Status__c=='Cancelled' && txn.Type__c=='Debit'){
+                        con.Id=txn.Contact__c;
+                        con.Available_Balance__c = mapOfContact.get(txn.Contact__c).Available_Balance__c + txn.Amount__c;
+                        mapOfContactToBeUpdate.put(con.Id,con);  
+                    }
+                    else{
+                        // if condition not met then the show an error on status.
+                        txn.Status__c.addError('you cannot select cancelled at new entry');
+                    }
                 }
             }
-        }
-        //  if this mapof Contact is not null then update parent and add or update transaction entry.
-        if(!mapOfContactToBeUpdate.isEmpty()){
-            update mapOfContactToBeUpdate.values();
-        }
+             //  if this mapof Contact is not null then update parent and add or update transaction entry.
+            if(!mapOfContactToBeUpdate.isEmpty()){
+                update mapOfContactToBeUpdate.values();
+            }
+        }  
     }
 /*
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -85,47 +88,54 @@ public class transactionEntryHelper {
 * ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 */
    public static void sentEmailNotification(List<Transactions_Entry__c> newTransactionList){
-       Set<Id> conId = new Set<Id>();
+       Set<Id> setOfContactIds = new Set<Id>();
        //adding parent id to conId set for transaction list
        for (Transactions_Entry__c txn : newTransactionList) {
-           conId.add(txn.Contact__c);
+           if(txn.Contact__c!=null){
+           		setOfContactIds.add(txn.Contact__c);
+           }
        }
-       // query data to which email have to sent.
-       List<Contact> conList = [SELECT Id,Available_Balance__c,Account_Number__c,Status__c,Email  FROM Contact WHERE Id IN : conId];
-       //created email list
-       List<Messaging.SingleEmailMessage> emailList =new List<Messaging.SingleEmailMessage>();
-       //iterating transaction list
-       for(Transactions_Entry__c txn : newTransactionList){
-           for(Contact con: conList){
-               //check for contact id and transaction parent id and contact status transaction status
-                if(con.Id==txn.Contact__c && con.Status__c=='Active' && 
-                    (txn.Status__c=='Completed' ||txn.Status__c=='Pending')){
-                    //creating single email
-                    Messaging.SingleEmailMessage emailMsg =  new Messaging.SingleEmailMessage();
-                    //adding email address of contact
-                    String [] toAddress=new String[]{con.Email};
-                    //setting email address
-                    emailMsg.setToAddresses(toAddress);
-                    //adding subject
-                    String emailSub=' Balance alert Notification';
-                    emailMsg.setSubject(emailSub);
-                    //adding display name
-                    String displayName='Axis Bank';
-                    emailMsg.setSenderDisplayName(displayName);
-                    //creating email content or HTMLBody and adding transactions detail and contact details.
-                    String content ='Your '+  con.Account_Number__c +' is ' 
-                                            + txn.Type__c +  ' by '  + txn.Amount__c +  ' on '
-                                            + txn.Transaction_Date__c +  ' . Available Balance Rs. '
-                                            + con.Available_Balance__c;
-                    //adding content to email
-                    emailMsg.setHtmlBody(content);
-                    //adding email to email list.
-                    emailList.add(emailMsg);
-                }
-           }  
+       if(!setOfContactIds.isEmpty()){
+           // query data to which email have to sent.
+           List<Contact> conList = [SELECT Id,Available_Balance__c,Account_Number__c,Status__c,Email  FROM Contact WHERE Id IN : setOfContactIds];
+           //created email list
+           List<Messaging.SingleEmailMessage> emailList =new List<Messaging.SingleEmailMessage>();
+           //iterating transaction list
+           for(Transactions_Entry__c txn : newTransactionList){
+               for(Contact con: conList){
+                   //check for contact id and transaction parent id and contact status transaction status
+                    if(con.Id==txn.Contact__c && con.Status__c=='Active' && 
+                        (txn.Status__c=='Completed' ||txn.Status__c=='Pending')){
+                        //creating single email
+                        Messaging.SingleEmailMessage emailMsg =  new Messaging.SingleEmailMessage();
+                        //adding email address of contact
+                        String [] toAddress=new String[]{con.Email};
+                        //setting email address
+                        emailMsg.setToAddresses(toAddress);
+                        //adding subject
+                        String emailSub=' Balance alert Notification';
+                        emailMsg.setSubject(emailSub);
+                        //adding display name
+                        String displayName='Axis Bank';
+                        emailMsg.setSenderDisplayName(displayName);
+                        //creating email content or HTMLBody and adding transactions detail and contact details.
+                        String content ='Your '+  con.Account_Number__c +' is ' 
+                                                + txn.Type__c +  ' by '  + txn.Amount__c +  ' on '
+                                                + txn.Transaction_Date__c +  ' . Available Balance Rs. '
+                                                + con.Available_Balance__c;
+                        //adding content to email
+                        emailMsg.setHtmlBody(content);
+                        //adding email to email list.
+                        emailList.add(emailMsg);
+                    }
+               }  
+           }
+            // sending emails to the contact's email which have done some transaction.
+           if(!emailList.isEmpty()){
+       			Messaging.sendEmail(emailList);
+           }
        }
-       // sending emails to the contact's email which have done some transaction.
-       Messaging.sendEmail(emailList);
+      
     } 
 /*
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -144,7 +154,9 @@ public class transactionEntryHelper {
        
         //loop to store the ids
         for(Transactions_Entry__c tran : newTransactionList) {
-            setOfContactIds.add(tran.Contact__c);
+            if(tran.Contact__c!=null){
+            	setOfContactIds.add(tran.Contact__c);
+            }
         }
         // map to strore debit details    
         Map<Id, Map<String,Integer>> mapOfConIdWithTxnEntriesForAmountDebitedPerDay = new Map<Id, Map<String,Integer>>();
@@ -160,7 +172,7 @@ public class transactionEntryHelper {
             }
             // adding one in every transaction at value.
             mapOfConIdWithTxnEntriesForAmountDebitedPerDay.get(tran.Contact__c).put('transactionEntries',
-                                                          (Integer)mapOfConIdWithTxnEntriesForAmountDebitedPerDay.get(tran.Contact__c).get('transactionEntries')+1);
+                                                         	(Integer)mapOfConIdWithTxnEntriesForAmountDebitedPerDay.get(tran.Contact__c).get('transactionEntries')+1);
             //    check if type is debit then adding one to value.
             if(tran.Type__c == 'Debit') {
                 mapOfConIdWithTxnEntriesForAmountDebitedPerDay.get(tran.Contact__c).put('debitAmount',

@@ -56,14 +56,13 @@ public with sharing class searchTransactionHelper {
         // iterating map of operator.
         for(String str: mapOperators.keySet()){
             // check for  map value is not null
-            if(mapValues.get(str) != null && mapValues.get(str) != '0'){
+            if(mapValues.get(str) != null){
                 // concatinate map value and map operator and add it to temp list
                 tempList.add(mapOperators.get(str) + ' ' + String.valueOf(mapValues.get(str)));
             }
         }
         filter += String.join(tempList, ' AND ');
         query += filter;
-        System.debug('Query: ' + query);
         // querying dynamic query using inbuild function databasequery.
         transactionData = Database.query(query);
     }

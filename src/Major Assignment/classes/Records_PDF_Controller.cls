@@ -24,8 +24,8 @@ public with sharing class Records_PDF_Controller {
         String stringStartDate = String.valueOf(date.newinstance(startDate.year(), startDate.month(), startDate.day()));
         String stringEndDate = String.valueOf(date.newinstance(endDate.year(), endDate.month(), endDate.day()));
         Transactions_Entry_List  = [SELECT Id, Name, Transaction_Date__c, Amount__c,  Type__c, Status__c
-                                    FROM Transactions_Entry__c WHERE Contact__c = :idOfContacts AND CreatedDate >= :startDate AND CreatedDate <= :endDate];
-                                    System.debug('List Of Records'+Transactions_Entry_List);
+                                    	FROM Transactions_Entry__c WHERE Contact__c = :idOfContacts AND
+                                    			CreatedDate >= :startDate AND CreatedDate <= :endDate];
         contact_Object = [SELECT Id, Title, Name , Email, Account_Number__c FROM Contact WHERE ID = :idOfContacts];
         startDateString = newStartDate;
         endDateString = newEndDate;
